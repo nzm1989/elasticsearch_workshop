@@ -1,0 +1,6 @@
+{ "index": {"_id": 1 } }
+{ "name": "James Wong", "role": "Property Agent", "country": "Singapore", "fun_fact": "I hike, walk and climb. I aim to climb the world highest mountain before the age of 40." }
+{ "index": {"_id": 2 } }
+{ "name": "John Lee", "role": "Technical Architect", "country": "Singapore", "fun_fact": "I love Anime and RPG Games with my own collections of Waifu. I like dealing with Software Architecture and DevOps. " }
+{ "index": {"_id": 3 } }
+{ "name": "Peter Tan", "role": "Sales Associate", "country": "Indonesia", "fun_fact": "You can also call me Pep. Love all sports. Was a member of Radio Broadcasting team during school. " }

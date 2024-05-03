@@ -1,0 +1,72 @@
+version: '3.9'
+
+services:
+  database:
+    image: postgres:12
+    restart: always
+    volumes:
+    - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+  backend:
+    user: 1000:1000
+    restart: always
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/tmp/app
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_HOST
+      - POSTGRES_PORT
+    ports:
+    - 8001:8000
+    depends_on:
+      - database
+  frontend:
+    user: 1000:1000
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend/elasticsearch-workshop:/tmp/app
+    ports:
+      - 8081:8080
+  elasticsearch:
+    user: 1000:1000
+    build:
+      context: ./elasticsearch
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - node.name=elastic_search01
+      - cluster.name=insight_cluster
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elastic_search_data01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+  kibana:
+    user: 1000:1000
+    image: docker.elastic.co/kibana/kibana:7.11.1
+    restart: always
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+volumes:
+  elastic_search_data01:
+  pgdata:
+    driver: local

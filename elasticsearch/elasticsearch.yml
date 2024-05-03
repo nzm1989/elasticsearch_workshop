@@ -1,0 +1,5 @@
+cluster.name: "docker-cluster"
+network.host: 0.0.0.0
+# Set a custom allowed content length:
+# 
+http.max_content_length: 1gb
