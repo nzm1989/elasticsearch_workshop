@@ -6,3 +6,5 @@ To start this workshop, ensure you have Docker Engine install and execute the be
 ```
 docker compose up --build
 ```
+
+Once the containers are built, access the portal via http://localhost:8081
